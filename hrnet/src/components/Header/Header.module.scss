@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 200px;
+
+    .img {
+        width: 200px;
+    }
+
+    .link {
+        font-size: 1.1em;
+        text-decoration: none;
+        padding: 10px;
+        border: 1px solid #6E8511;
+        background-color: #6E8511;
+        color: #fff;
+        border-radius: 5px;
+
+        &:hover {
+            text-decoration: underline;
+            background-color: darken($color: #6E8511, $amount: 5);
+            box-shadow: 5px 5px 10px #6E8511;
+        }
+    }
+}
