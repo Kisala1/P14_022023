@@ -1,26 +1,40 @@
+@use '../../pages/style/theme.scss';
+
+.containerEmployee {
+    display: flex;
+    align-items: center;
+    margin: 20px 200px;
+
+    .title {
+        position: absolute;
+        left: 45%;
+    }
+}
+
 .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 20px 200px;
 
-    .img {
-        width: 200px;
-    }
+}
 
-    .link {
-        font-size: 1.1em;
-        text-decoration: none;
-        padding: 10px;
-        border: 1px solid #6E8511;
-        background-color: #6E8511;
-        color: #fff;
-        border-radius: 5px;
+.img {
+    width: 200px;
+}
 
-        &:hover {
-            text-decoration: underline;
-            background-color: darken($color: #6E8511, $amount: 5);
-            box-shadow: 5px 5px 10px #6E8511;
-        }
+.link {
+    font-size: 1.1em;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid theme.$bg-secondary;
+    background-color: theme.$bg-secondary;
+    color: #fff;
+    border-radius: 5px;
+
+    &:hover {
+        text-decoration: underline;
+        background-color: darken($color: theme.$bg-secondary, $amount: 5);
+        box-shadow: 5px 5px 10px theme.$bg-secondary;
     }
 }

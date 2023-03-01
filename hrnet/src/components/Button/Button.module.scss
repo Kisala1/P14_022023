@@ -1,0 +1,16 @@
+@use '../../pages/style/theme.scss';
+
+.btn {
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: theme.$bg-thirdy;
+
+    &:hover {
+        background-color: darken($color: theme.$bg-thirdy, $amount: 10);
+        border: 1px solid #fff;
+    }
+}

@@ -1,10 +1,10 @@
 import { Header } from '../Header/Header';
-import styles from './MainLayout.module.scss'
+import styles from './MainLayout.module.scss';
 
-export function MainLayout({ children, title, viewEmployees }) {
+export function MainLayout({ children, viewEmployees }) {
   return (
-    <div className={styles.container} >
-      <Header title={title} viewEmployees={viewEmployees} />
+    <div className={styles.container}>
+      <Header viewEmployees={viewEmployees} />
       {children}
     </div>
   );
