@@ -17,7 +17,7 @@ export function Header({ viewEmployees }) {
           <Link to={'/'}>
             <img className={styles.img} src={logo} alt="logo Wealth heath" />
           </Link>
-          <h1>HRnet</h1>
+          <h1 className={styles.titleCreate}>HRnet</h1>
           <Link className={styles.link} to={'/employeeslist'}>
             View Current Employees
           </Link>

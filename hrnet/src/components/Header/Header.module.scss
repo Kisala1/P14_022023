@@ -3,11 +3,14 @@
 .containerEmployee {
     display: flex;
     align-items: center;
-    margin: 20px 200px;
+    margin: 10px 150px;
 
     .title {
         position: absolute;
-        left: 45%;
+        left: 40%;
+        font-size: 3em;
+        font-weight: normal;
+        text-decoration: underline;
     }
 }
 
@@ -15,18 +18,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 200px;
+    margin: 10px 150px 0 150px;
 
+    .titleCreate {
+        font-size: 3em;
+        font-weight: normal;
+        text-decoration: underline;
+    }
 }
+
 
 .img {
     width: 200px;
 }
 
 .link {
-    font-size: 1.1em;
-    text-decoration: none;
     padding: 10px;
+    text-decoration: none;
+    font-size: 1.1em;
     border: 1px solid theme.$bg-secondary;
     background-color: theme.$bg-secondary;
     color: #fff;
