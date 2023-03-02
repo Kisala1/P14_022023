@@ -10,7 +10,7 @@ import styles from './Form.module.scss';
 export function Form({ textInputs, dateInputs, adressInputs, handleSubmit }) {
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      <div className={styles.containerInputs}>
+      <div>
         {textInputs.map((name, index) => (
           <div key={index} className={styles.blocInput}>
             <label>{name}</label>
@@ -18,7 +18,7 @@ export function Form({ textInputs, dateInputs, adressInputs, handleSubmit }) {
           </div>
         ))}
       </div>
-      <div className={styles.containerInputs}>
+      <div>
         {dateInputs.map((name, index) => (
           <div key={index} className={styles.blocInput}>
             <label>{name}</label>
@@ -40,7 +40,9 @@ export function Form({ textInputs, dateInputs, adressInputs, handleSubmit }) {
           <NumberInput id={'Zip Code'} />
         </div>
       </fieldset>
-      <DropDown name={'Department'} options={departments.Departments} />
+      <div className={styles.dropdownDepartments}>
+        <DropDown name={'Department'} options={departments.Departments} />
+      </div>
       <Button content="Save" />
     </form>
   );

@@ -9,3 +9,9 @@ input {
   margin: 10px 0;
   width: 180px;
 }
+
+@media (max-width: 600px) {
+  input {
+    width: 130px;
+  }
+}

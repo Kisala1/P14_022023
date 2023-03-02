@@ -1,0 +1,14 @@
+@mixin link {
+    padding: 10px;
+    text-decoration: none;
+    font-size: 1.1em;
+    border: 1px solid theme.$bg-secondary;
+    background-color: theme.$bg-secondary;
+    color: #fff;
+    border-radius: 5px;
+}
+
+@mixin flexAlignCenter {
+    display: flex;
+    align-items: center;
+}

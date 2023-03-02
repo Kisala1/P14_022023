@@ -1,8 +1,8 @@
 @use '../../pages/style/theme.scss';
+@import '../../pages/style/mixin.scss';
 
 .containerEmployee {
-    display: flex;
-    align-items: center;
+    @include flexAlignCenter;
     margin: 10px 150px;
 
     .title {
@@ -15,9 +15,8 @@
 }
 
 .container {
-    display: flex;
+    @include flexAlignCenter;
     justify-content: space-between;
-    align-items: center;
     margin: 10px 150px 0 150px;
 
     .titleCreate {
@@ -33,17 +32,54 @@
 }
 
 .link {
-    padding: 10px;
-    text-decoration: none;
-    font-size: 1.1em;
-    border: 1px solid theme.$bg-secondary;
-    background-color: theme.$bg-secondary;
-    color: #fff;
-    border-radius: 5px;
+    @include link;
 
     &:hover {
         text-decoration: underline;
         background-color: darken($color: theme.$bg-secondary, $amount: 5);
         box-shadow: 5px 5px 10px theme.$bg-secondary;
+    }
+}
+
+.linkResponsive {
+    @include link;
+    display: none;
+    margin: 20px 0;
+    width: max-content;
+}
+
+@media (max-width: 1300px) {
+    .container {
+        margin: 0 10px;
+        justify-content: space-around;
+
+        .link {
+            display: none;
+        }
+    }
+
+    .containerResponsive {
+        @include flexAlignCenter;
+        flex-direction: column;
+
+        .linkResponsive {
+            display: block;
+        }
+    }
+
+}
+
+@media (max-width: 600px) {
+    .img {
+        width: 100px;
+    }
+
+    .titleCreate {
+        font-size: 2em !important;
+    }
+
+    .linkResponsive {
+        padding: 5px;
+        font-size: 1em;
     }
 }
