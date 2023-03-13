@@ -4,7 +4,8 @@ export function renderErrorMessage(formData) {
   const errors = {};
 
   const inputRegExp = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF '-]+$/;
-  // const streetRegExp = /^\d+\s+[a-zA-Z'-]+\s+(?:[a-zA-Z'-]+\s*)*$/;
+  const streetRegExp = /^\d+\s+[a-zA-Z'-]+\s+(?:[a-zA-Z'-]+\s*)*$/;
+
   const errorEmpty = 'The field cannot be empty.';
   const errorMoreCharac = 'Please enter 2 or more characters.';
   const errorLessCharac = 'Please enter 25 characters or less.';
@@ -43,7 +44,6 @@ export function renderErrorMessage(formData) {
   }
 
   /* Error for input DateofBirth */
-
   if (!formData.DateofBirth || formData.DateofBirth.trim().length === 0) {
     errors['DateofBirth'] = errorEmpty;
   }
@@ -66,9 +66,9 @@ export function renderErrorMessage(formData) {
     if (formData.Street.length > 25) {
       errors['Street'] = errorLessCharac;
     }
-    // if (!streetRegExp.test(formData.Street)) {
-    //   errors['Street'] = errorOnlyLetters;
-    // }
+    if (!streetRegExp.test(formData.Street)) {
+      errors['Street'] = errorOnlyLetters;
+    }
   }
 
   /* Error for input City */
@@ -99,12 +99,4 @@ export function renderErrorMessage(formData) {
   }
 
   return errors;
-
-  //   const nameRegExp =
-  //     /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF '-\d]*[\W_]+[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF '-\d]*$/;
-  //   if (!nameRegExp.test(value)) {
-  //     return (
-  //       <div className={styles.error}>
-  //         Please enter only letters, numbers, apostrophes or dashes.
-  //       </div>
 }
