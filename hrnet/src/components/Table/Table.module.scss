@@ -1,0 +1,17 @@
+@use '../../pages/style/theme.scss';
+
+table,
+tr,
+th {
+    border: 1px solid theme.$bg-primary;
+}
+
+table {
+    width: 100%;
+
+}
+
+th:first-child {
+    background-color: theme.$bg-secondary;
+
+}

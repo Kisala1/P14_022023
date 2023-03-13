@@ -3,6 +3,15 @@
 body {
   margin: 0;
   font-family: theme.$font-primary;
+
+}
+
+.error {
+  margin: 0 0 10px 0;
+  width: 180px;
+  font-size: 0.8em;
+  color: red;
+  white-space: pre;
 }
 
 input {
@@ -10,8 +19,13 @@ input {
   width: 180px;
 }
 
+
 @media (max-width: 600px) {
   input {
+    width: 130px;
+  }
+
+  .error {
     width: 130px;
   }
 }

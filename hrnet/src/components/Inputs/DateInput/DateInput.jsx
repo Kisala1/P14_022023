@@ -1,7 +1,7 @@
-export function DateInput({ id }) {
+export function DateInput({ functionOnChange, id, name }) {
   return (
     <>
-      <input type={'date'} id={id} />
+      <input onChange={functionOnChange} type={'date'} id={id} name={name} />
     </>
   );
 }

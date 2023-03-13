@@ -1,7 +1,7 @@
-export function NumberInput({ id }) {
+export function NumberInput({ functionOnChange, id, name }) {
   return (
     <>
-      <input type={'number'} id={id}/>
+      <input onChange={functionOnChange} type={'number'} id={id} name={name} />
     </>
   );
 }
