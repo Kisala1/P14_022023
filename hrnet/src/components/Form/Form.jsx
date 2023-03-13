@@ -3,7 +3,6 @@ import { DateInput } from '../Inputs/DateInput/DateInput';
 import { NumberInput } from '../Inputs/NumberInput/NumberInput';
 import { Button } from '../Button/Button';
 import { DropDown } from '../Dropdown/Dropdown';
-// import { Modal } from '../Modal/Modal';
 import departments from '../../data/departments.json';
 import states from '../../data/states.json';
 import styles from './Form.module.scss';
@@ -83,7 +82,7 @@ export function Form({ textInputs, dateInputs, adressInputs }) {
           <NumberInput
             id={'ZipCode'}
             name={'ZipCode'}
-            error={formErrors[noEspace('ZipCode')]}
+            error={formErrors['ZipCode']}
           />
         </div>
       </fieldset>

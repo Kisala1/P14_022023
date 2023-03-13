@@ -20,6 +20,6 @@ export function LocalStorage() {
     zipCode,
     department,
   });
-  const employees = localStorage.setItem('employees', data);
-  return employees;
+  
+  return data;
 }

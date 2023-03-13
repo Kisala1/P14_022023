@@ -4,7 +4,6 @@ export function renderErrorMessage(formData) {
   const errors = {};
 
   const inputRegExp = /^[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF '-]+$/;
-  const streetRegExp = /^\d+\s+[a-zA-Z'-]+\s+(?:[a-zA-Z'-]+\s*)*$/;
 
   const errorEmpty = 'The field cannot be empty.';
   const errorMoreCharac = 'Please enter 2 or more characters.';
@@ -65,9 +64,6 @@ export function renderErrorMessage(formData) {
     }
     if (formData.Street.length > 25) {
       errors['Street'] = errorLessCharac;
-    }
-    if (!streetRegExp.test(formData.Street)) {
-      errors['Street'] = errorOnlyLetters;
     }
   }
 
