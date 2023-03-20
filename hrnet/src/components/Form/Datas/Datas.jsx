@@ -1,4 +1,4 @@
-export function LocalStorage() {
+export function Datas() {
   const firstName = document.getElementById('FirstName').value;
   const lastName = document.getElementById('LastName').value;
   const dateBirth = document.getElementById('DateofBirth').value;

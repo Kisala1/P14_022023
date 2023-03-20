@@ -11,7 +11,15 @@ table {
 
 }
 
-th:first-child {
+.headersName>th {
+    padding: 5px 10px;
+}
+
+.firstName {
     background-color: theme.$bg-secondary;
 
+}
+
+.thFirstName {
+    background-color: lighten($color: theme.$bg-secondary, $amount: 10);
 }

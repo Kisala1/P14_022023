@@ -3,17 +3,20 @@ import { DateInput } from '../Inputs/DateInput/DateInput';
 import { NumberInput } from '../Inputs/NumberInput/NumberInput';
 import { Button } from '../Button/Button';
 import { DropDown } from '../Dropdown/Dropdown';
+import { Modal } from '../Modal/Modal';
 import departments from '../../data/departments.json';
 import states from '../../data/states.json';
 import styles from './Form.module.scss';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { LocalStorage } from './LocalStorage/LocalStorage';
+import { Datas } from './Datas/Datas';
 import { createLocalStorage } from '../../feature/localStorageReducer';
-import { renderErrorMessage } from './Condition/Conditions';
+import { renderErrorMessage } from './Conditions/Conditions';
 
 export function Form({ textInputs, dateInputs, adressInputs }) {
+  /* TODO faire en sorte que quand il y a une erreur sur un input n'efface pas leur contenu*/
   const [formErrors, setFormErrors] = useState({});
+  const [showModal, setShowModal] = useState(false);
   const noEspace = (name) => name.replace(/ /g, '');
   const dispatch = useDispatch();
 
@@ -31,14 +34,14 @@ export function Form({ textInputs, dateInputs, adressInputs }) {
     });
     setFormErrors(errors);
     if (Object.keys(errors).length === 0) {
-      console.log('Formulaire envoyé avec succès !');
+      setShowModal(true);
     } else {
       console.log("Formulaire non envoyé en raison d'erreurs.");
     }
-    dispatch(createLocalStorage(LocalStorage()));
+    dispatch(createLocalStorage(Datas()));
   };
 
-  return (
+  const renderForm = (
     <form onSubmit={handleSubmit} className={styles.container}>
       <div>
         {textInputs.map((name, index) => (
@@ -91,5 +94,17 @@ export function Form({ textInputs, dateInputs, adressInputs }) {
       </div>
       <Button type="submit" content="Save" />
     </form>
+  );
+  return (
+    <>
+      {showModal ? (
+        <>
+          {renderForm}
+          <Modal closeModal={() => setShowModal(false)} />
+        </>
+      ) : (
+        renderForm
+      )}
+    </>
   );
 }
