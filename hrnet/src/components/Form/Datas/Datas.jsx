@@ -1,8 +1,13 @@
+function formatDate(dateString) {
+  const [year, month, day] = dateString.split('-');
+  return `${month}/${day}/${year}`;
+}
+
 export function Datas() {
   const firstName = document.getElementById('FirstName').value;
   const lastName = document.getElementById('LastName').value;
-  const dateBirth = document.getElementById('DateofBirth').value;
-  const startDate = document.getElementById('StartDate').value;
+  const dateBirth = formatDate(document.getElementById('DateofBirth').value);
+  const startDate = formatDate(document.getElementById('StartDate').value);
   const street = document.getElementById('Street').value;
   const city = document.getElementById('City').value;
   const states = document.getElementById('States').value;
@@ -20,6 +25,6 @@ export function Datas() {
     zipCode,
     department,
   });
-  
+
   return data;
 }
