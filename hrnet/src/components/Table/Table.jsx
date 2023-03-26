@@ -30,9 +30,9 @@ export function Table({ datas }) {
 
   return (
     <>
-      <div className={styles.containerSearch} >
+      <div className={styles.containerSearch}>
         <Show />
-        <Search datas={datas}/>
+        <Search datas={datas} />
       </div>
       <table>
         <thead>
@@ -87,7 +87,13 @@ export function Table({ datas }) {
               })}
           </tbody>
         ) : (
-          <tbody></tbody>
+          <tbody>
+            <tr>
+              <td colSpan={9} className={styles.tdNoData}>
+                No data available in table
+              </td>
+            </tr>
+          </tbody>
         )}
       </table>
     </>

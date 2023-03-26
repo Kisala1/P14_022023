@@ -27,3 +27,9 @@ table {
         background-color: rgba($color: theme.$bg-secondary, $alpha: 0.4);
     }
 }
+
+.tdNoData {
+    font-weight: bold;
+    text-align: center;
+    background-color: rgba($color: theme.$bg-secondary, $alpha: 0.4);
+}
