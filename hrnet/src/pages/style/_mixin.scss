@@ -1,4 +1,4 @@
-@mixin link {
+@mixin linkbtn {
     padding: 10px;
     text-decoration: none;
     font-size: 1.1em;
@@ -6,6 +6,12 @@
     background-color: theme.$bg-secondary;
     color: #fff;
     border-radius: 5px;
+
+    &:hover {
+        background-color: lighten($color: theme.$bg-secondary, $amount: 5);
+        text-decoration: underline;
+        box-shadow: 5px 5px 10px theme.$bg-secondary;
+    }
 }
 
 @mixin flexAlignCenter {

@@ -12,7 +12,7 @@
     }
 
     .link {
-        @include link;
-        margin-top: 20px;
+        @include linkbtn;
+        margin: 20px;
     }
 }

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import styles from './Modal.module.scss';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 export function Modal({ closeModal }) {
@@ -25,7 +26,12 @@ export function Modal({ closeModal }) {
                 closeModal();
               }}
             />
-            <span>Employee Created !</span>
+            <div className={styles.content}>
+              <span>Employee Created !</span>
+              <Link className={styles.link} to={'/employeeslist'}>
+                View Current Employees
+              </Link>
+            </div>
           </div>
         </div>
       )}

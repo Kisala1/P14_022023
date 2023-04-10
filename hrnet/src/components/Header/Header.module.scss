@@ -32,17 +32,12 @@
 }
 
 .link {
-    @include link;
+    @include linkbtn;
 
-    &:hover {
-        text-decoration: underline;
-        background-color: darken($color: theme.$bg-secondary, $amount: 5);
-        box-shadow: 5px 5px 10px theme.$bg-secondary;
-    }
 }
 
 .linkResponsive {
-    @include link;
+    @include linkbtn;
     display: none;
     margin: 20px 0;
     width: max-content;

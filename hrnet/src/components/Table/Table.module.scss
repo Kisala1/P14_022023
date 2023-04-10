@@ -31,5 +31,15 @@ table {
 .tdNoData {
     font-weight: bold;
     text-align: center;
-    background-color: rgba($color: theme.$bg-secondary, $alpha: 0.4);
+}
+
+.containerShowingBtn {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 10px 0;
+
+    .numberEntries {
+        font-size: smaller;
+    }
 }
