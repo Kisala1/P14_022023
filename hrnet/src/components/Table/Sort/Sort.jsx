@@ -19,17 +19,17 @@ export function Sort({ children, sortKey, onSort }) {
     onSort(sortKey, newDirection);
   };
 
-  const getSortIcon = () => {
-    switch (sortDirection) {
-      case 'ascending':
-        return '▲';
-      case 'descending':
-        return '▼';
-      default:
-        return '';
-    }
-  };
-  
+   const getSortIcon = () => {
+     switch (sortDirection) {
+       case 'ascending':
+         return '▲';
+       case 'descending':
+         return '▼';
+       default:
+         return '';
+     }
+   };
+
   return (
     <th onClick={handleClick}>
       {children}
