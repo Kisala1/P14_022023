@@ -35,10 +35,10 @@ export function Form({ textInputs, dateInputs, adressInputs }) {
     setFormErrors(errors);
     if (Object.keys(errors).length === 0) {
       setShowModal(true);
+      dispatch(createLocalStorage(Datas()));
     } else {
       console.log("Formulaire non envoyé en raison d'erreurs.");
     }
-    dispatch(createLocalStorage(Datas()));
   };
 
   const renderForm = (

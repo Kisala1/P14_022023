@@ -4,6 +4,15 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+
+    .dropDownValueEntries {
+        display: flex;
+        align-items: baseline;
+
+        select {
+            margin: 0 5px;
+        }
+    }
 }
 
 table,

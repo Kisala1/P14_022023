@@ -8,6 +8,10 @@ import styles from './Table.module.scss';
 export function Table({ datas }) {
   const [sortKey, setSortKey] = useState(null);
   const [sortDirection, setSortDirection] = useState('none');
+  const [numEntries, setNumEntries] = useState(10);
+  function handleNumEntriesChange(event) {
+    setNumEntries(parseInt(event.target.value));
+  }
 
   const handleSort = (key, direction) => {
     setSortKey(key);
@@ -38,44 +42,58 @@ export function Table({ datas }) {
   return (
     <>
       <div className={styles.containerSearch}>
-        <Show />
+        {/* <Show /> */}
+        <div className={styles.dropDownValueEntries}>
+          <label htmlFor="num-entries">Show</label>
+          <select
+            id="num-entries"
+            value={numEntries}
+            onChange={handleNumEntriesChange}
+          >
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <p>entries</p>
+        </div>
         <Search datas={datas} onSearch={handleSearch} />
       </div>
-      <table>
-        <thead>
-          <tr className={styles.headersName}>
-            <Sort sortKey="firstName" onSort={handleSort}>
-              First Name
-            </Sort>
-            <Sort sortKey="lastName" onSort={handleSort}>
-              Last Name
-            </Sort>
-            <Sort sortKey="startDate" onSort={handleSort}>
-              Start Date
-            </Sort>
-            <Sort sortKey="department" onSort={handleSort}>
-              Department
-            </Sort>
-            <Sort sortKey="dateBirth" onSort={handleSort}>
-              Date of Birth
-            </Sort>
-            <Sort sortKey="street" onSort={handleSort}>
-              Street
-            </Sort>
-            <Sort sortKey="city" onSort={handleSort}>
-              City
-            </Sort>
-            <Sort sortKey="states" onSort={handleSort}>
-              State
-            </Sort>
-            <Sort sortKey="zipCode" onSort={handleSort}>
-              Zip Code
-            </Sort>
-          </tr>
-        </thead>
+      {datas ? (
+        <>
+          <table>
+            <thead>
+              <tr className={styles.headersName}>
+                <Sort sortKey="firstName" onSort={handleSort}>
+                  First Name
+                </Sort>
+                <Sort sortKey="lastName" onSort={handleSort}>
+                  Last Name
+                </Sort>
+                <Sort sortKey="startDate" onSort={handleSort}>
+                  Start Date
+                </Sort>
+                <Sort sortKey="department" onSort={handleSort}>
+                  Department
+                </Sort>
+                <Sort sortKey="dateBirth" onSort={handleSort}>
+                  Date of Birth
+                </Sort>
+                <Sort sortKey="street" onSort={handleSort}>
+                  Street
+                </Sort>
+                <Sort sortKey="city" onSort={handleSort}>
+                  City
+                </Sort>
+                <Sort sortKey="states" onSort={handleSort}>
+                  State
+                </Sort>
+                <Sort sortKey="zipCode" onSort={handleSort}>
+                  Zip Code
+                </Sort>
+              </tr>
+            </thead>
 
-        {datas ? (
-          <>
             <tbody className={styles.tbodyData}>
               {sortedData &&
                 sortedData.map((data, index) => {
@@ -111,9 +129,49 @@ export function Table({ datas }) {
               );
             })} */}
             </tbody>
-          </>
-        ) : (
-          <>
+          </table>
+          <div className={styles.containerShowingBtn}>
+            <p className={styles.numberEntries}>
+              Showing 1 to {numEntries} of{' '}
+              {datas.length} (total entries) entries
+            </p>
+            <Buttons disabled={true} />
+          </div>
+        </>
+      ) : (
+        <>
+          <table>
+            <thead>
+              <tr className={styles.headersName}>
+                <Sort sortKey="firstName" onSort={handleSort}>
+                  First Name
+                </Sort>
+                <Sort sortKey="lastName" onSort={handleSort}>
+                  Last Name
+                </Sort>
+                <Sort sortKey="startDate" onSort={handleSort}>
+                  Start Date
+                </Sort>
+                <Sort sortKey="department" onSort={handleSort}>
+                  Department
+                </Sort>
+                <Sort sortKey="dateBirth" onSort={handleSort}>
+                  Date of Birth
+                </Sort>
+                <Sort sortKey="street" onSort={handleSort}>
+                  Street
+                </Sort>
+                <Sort sortKey="city" onSort={handleSort}>
+                  City
+                </Sort>
+                <Sort sortKey="states" onSort={handleSort}>
+                  State
+                </Sort>
+                <Sort sortKey="zipCode" onSort={handleSort}>
+                  Zip Code
+                </Sort>
+              </tr>
+            </thead>
             <tbody>
               <tr>
                 <td colSpan={9} className={styles.tdNoData}>
@@ -121,17 +179,13 @@ export function Table({ datas }) {
                 </td>
               </tr>
             </tbody>
-            <p className={styles.numberEntries}>Showing 0 to 0 of 0 entries</p>
-          </>
-        )}
-      </table>
-      <div className={styles.containerShowingBtn} >
-        <p className={styles.numberEntries}>
-          Showing 1 to (nombre entries sélectionné dans le dropDown) of{' '}
-          {datas.length} (total entries) entries
-        </p>
-        <Buttons />
-      </div>
+          </table>
+          <div className={styles.containerShowingBtn}>
+            <p className={styles.numberEntries}>Showing 0 to {numEntries} of 0 entries</p>
+            <Buttons disabled={false} />
+          </div>
+        </>
+      )}
     </>
   );
 }
