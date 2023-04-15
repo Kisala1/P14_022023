@@ -9,6 +9,7 @@ export function Table({ datas }) {
   const [sortKey, setSortKey] = useState(null);
   const [sortDirection, setSortDirection] = useState('none');
   const [numEntries, setNumEntries] = useState(10);
+
   function handleNumEntriesChange(event) {
     setNumEntries(parseInt(event.target.value));
   }
@@ -39,6 +40,41 @@ export function Table({ datas }) {
     setFilteredData(data);
   };
 
+  const renderTbody = (datas) => {
+    if (datas) {
+      return (
+        <tbody className={styles.tbodyData}>
+          {sortedData &&
+            sortedData.map((data, index) => {
+              const employee = JSON.parse(data);
+              return (
+                <tr key={index}>
+                  <td>{employee.firstName}</td>
+                  <td>{employee.lastName}</td>
+                  <td>{employee.startDate}</td>
+                  <td>{employee.department}</td>
+                  <td>{employee.dateBirth}</td>
+                  <td>{employee.street}</td>
+                  <td>{employee.city}</td>
+                  <td>{employee.states}</td>
+                  <td>{employee.zipCode}</td>
+                </tr>
+              );
+            })}
+        </tbody>
+      );
+    } else {
+      return (
+        <tbody>
+          <tr>
+            <td colSpan={9} className={styles.tdNoData}>
+              No data available in table
+            </td>
+          </tr>
+        </tbody>
+      );
+    }
+  };
   return (
     <>
       <div className={styles.containerSearch}>
@@ -59,60 +95,56 @@ export function Table({ datas }) {
         </div>
         <Search datas={datas} onSearch={handleSearch} />
       </div>
-      {datas ? (
-        <>
-          <table>
-            <thead>
-              <tr className={styles.headersName}>
-                <Sort sortKey="firstName" onSort={handleSort}>
-                  First Name
-                </Sort>
-                <Sort sortKey="lastName" onSort={handleSort}>
-                  Last Name
-                </Sort>
-                <Sort sortKey="startDate" onSort={handleSort}>
-                  Start Date
-                </Sort>
-                <Sort sortKey="department" onSort={handleSort}>
-                  Department
-                </Sort>
-                <Sort sortKey="dateBirth" onSort={handleSort}>
-                  Date of Birth
-                </Sort>
-                <Sort sortKey="street" onSort={handleSort}>
-                  Street
-                </Sort>
-                <Sort sortKey="city" onSort={handleSort}>
-                  City
-                </Sort>
-                <Sort sortKey="states" onSort={handleSort}>
-                  State
-                </Sort>
-                <Sort sortKey="zipCode" onSort={handleSort}>
-                  Zip Code
-                </Sort>
-              </tr>
-            </thead>
 
-            <tbody className={styles.tbodyData}>
-              {sortedData &&
-                sortedData.map((data, index) => {
-                  const employee = JSON.parse(data);
-                  return (
-                    <tr key={index}>
-                      <td>{employee.firstName}</td>
-                      <td>{employee.lastName}</td>
-                      <td>{employee.startDate}</td>
-                      <td>{employee.department}</td>
-                      <td>{employee.dateBirth}</td>
-                      <td>{employee.street}</td>
-                      <td>{employee.city}</td>
-                      <td>{employee.states}</td>
-                      <td>{employee.zipCode}</td>
-                    </tr>
-                  );
-                })}
-              {/* {filteredData.map((item, index) => {
+      <table>
+        <thead>
+          <tr className={styles.headersName}>
+            <Sort sortKey="firstName" onSort={handleSort}>
+              First Name
+            </Sort>
+            <Sort sortKey="lastName" onSort={handleSort}>
+              Last Name
+            </Sort>
+            <Sort sortKey="startDate" onSort={handleSort}>
+              Start Date
+            </Sort>
+            <Sort sortKey="department" onSort={handleSort}>
+              Department
+            </Sort>
+            <Sort sortKey="dateBirth" onSort={handleSort}>
+              Date of Birth
+            </Sort>
+            <Sort sortKey="street" onSort={handleSort}>
+              Street
+            </Sort>
+            <Sort sortKey="city" onSort={handleSort}>
+              City
+            </Sort>
+            <Sort sortKey="states" onSort={handleSort}>
+              State
+            </Sort>
+            <Sort sortKey="zipCode" onSort={handleSort}>
+              Zip Code
+            </Sort>
+          </tr>
+        </thead>
+        {renderTbody(datas)}
+      </table>
+      <div className={styles.containerShowingBtn}>
+        <p className={styles.numberEntries}>
+          {/* TODO Showing {datas ? datas.length : 0} => datas.length incorrect doit afficher le chiffre de la 1ere entries  
+          ex : Showing 1 to 10 of 16 (page 1) ; Showing 11 to 10 of 16 (page 2) */}
+          Showing {datas ? datas.length : 0} to {numEntries} of{' '}
+          {datas ? datas.length : 0} entries
+        </p>
+        {datas ? <Buttons disabled={true} /> : <Buttons disabled={false} />}
+      </div>
+    </>
+  );
+}
+{
+  /* 
+              {filteredData.map((item, index) => {
               const filteredEmployees = JSON.parse(item);
               return (
                 <tr key={index}>
@@ -126,66 +158,5 @@ export function Table({ datas }) {
                   <td>{filteredEmployees.states}</td>
                   <td>{filteredEmployees.zipCode}</td>
                 </tr>
-              );
-            })} */}
-            </tbody>
-          </table>
-          <div className={styles.containerShowingBtn}>
-            <p className={styles.numberEntries}>
-              Showing 1 to {numEntries} of{' '}
-              {datas.length} (total entries) entries
-            </p>
-            <Buttons disabled={true} />
-          </div>
-        </>
-      ) : (
-        <>
-          <table>
-            <thead>
-              <tr className={styles.headersName}>
-                <Sort sortKey="firstName" onSort={handleSort}>
-                  First Name
-                </Sort>
-                <Sort sortKey="lastName" onSort={handleSort}>
-                  Last Name
-                </Sort>
-                <Sort sortKey="startDate" onSort={handleSort}>
-                  Start Date
-                </Sort>
-                <Sort sortKey="department" onSort={handleSort}>
-                  Department
-                </Sort>
-                <Sort sortKey="dateBirth" onSort={handleSort}>
-                  Date of Birth
-                </Sort>
-                <Sort sortKey="street" onSort={handleSort}>
-                  Street
-                </Sort>
-                <Sort sortKey="city" onSort={handleSort}>
-                  City
-                </Sort>
-                <Sort sortKey="states" onSort={handleSort}>
-                  State
-                </Sort>
-                <Sort sortKey="zipCode" onSort={handleSort}>
-                  Zip Code
-                </Sort>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colSpan={9} className={styles.tdNoData}>
-                  No data available in table
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className={styles.containerShowingBtn}>
-            <p className={styles.numberEntries}>Showing 0 to {numEntries} of 0 entries</p>
-            <Buttons disabled={false} />
-          </div>
-        </>
-      )}
-    </>
-  );
+            */
 }
