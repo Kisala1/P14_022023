@@ -5,14 +5,21 @@ import { Buttons } from './Buttons/Buttons';
 import { useState } from 'react';
 import styles from './Table.module.scss';
 
-export function Table({ datas }) {
+const parseData = (data) => JSON.parse(data);
+
+export function Table({ datas, sortDatas }) {
   const [sortKey, setSortKey] = useState(null);
   const [sortDirection, setSortDirection] = useState('none');
   const [numEntries, setNumEntries] = useState(10);
+  const [filteredData, setFilteredData] = useState(datas);
 
   function handleNumEntriesChange(event) {
     setNumEntries(parseInt(event.target.value));
   }
+
+  const handleSearch = (data) => {
+    setFilteredData(data);
+  };
 
   const handleSort = (key, direction) => {
     setSortKey(key);
@@ -21,24 +28,20 @@ export function Table({ datas }) {
 
   const sortedData =
     datas &&
-    datas.slice().sort((a, b) => {
-      const employeeA = JSON.parse(a)[sortKey];
-      const employeeB = JSON.parse(b)[sortKey];
+    datas
+      .slice()
+      .sort((a, b) => {
+        let employeeA = parseData(a)[sortKey];
+        let employeeB = parseData(b)[sortKey];
 
-      if (employeeA < employeeB) {
-        return sortDirection === 'ascending' ? -1 : 1;
-      }
-      if (employeeA > employeeB) {
-        return sortDirection === 'ascending' ? 1 : -1;
-      }
-      return 0;
-    });
-
-  const [filteredData, setFilteredData] = useState(datas);
-
-  const handleSearch = (data) => {
-    setFilteredData(data);
-  };
+        // TODO appliquer le tri par firstname directement sur la page + modifier la condition
+        // TODO Faire en sorte que la flèche précédente disparaisse après avoir appuyé sur un autre élément pour trier
+        if (employeeA < employeeB) {
+          return sortDirection === 'ascending' ? -1 : 1;
+        }
+        return sortDirection === 'descending' ? 1 : -1;
+      })
+      .slice(0, numEntries);
 
   const renderTbody = (datas) => {
     if (datas) {
@@ -46,7 +49,7 @@ export function Table({ datas }) {
         <tbody className={styles.tbodyData}>
           {sortedData &&
             sortedData.map((data, index) => {
-              const employee = JSON.parse(data);
+              const employee = parseData(data);
               return (
                 <tr key={index}>
                   <td>{employee.firstName}</td>
@@ -78,54 +81,22 @@ export function Table({ datas }) {
   return (
     <>
       <div className={styles.containerSearch}>
-        {/* <Show /> */}
-        <div className={styles.dropDownValueEntries}>
-          <label htmlFor="num-entries">Show</label>
-          <select
-            id="num-entries"
-            value={numEntries}
-            onChange={handleNumEntriesChange}
-          >
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-          <p>entries</p>
-        </div>
+        <Show
+          numEntries={numEntries}
+          setNumEntries={setNumEntries}
+          handleNumEntriesChange={handleNumEntriesChange}
+        />
         <Search datas={datas} onSearch={handleSearch} />
       </div>
 
       <table>
         <thead>
           <tr className={styles.headersName}>
-            <Sort sortKey="firstName" onSort={handleSort}>
-              First Name
-            </Sort>
-            <Sort sortKey="lastName" onSort={handleSort}>
-              Last Name
-            </Sort>
-            <Sort sortKey="startDate" onSort={handleSort}>
-              Start Date
-            </Sort>
-            <Sort sortKey="department" onSort={handleSort}>
-              Department
-            </Sort>
-            <Sort sortKey="dateBirth" onSort={handleSort}>
-              Date of Birth
-            </Sort>
-            <Sort sortKey="street" onSort={handleSort}>
-              Street
-            </Sort>
-            <Sort sortKey="city" onSort={handleSort}>
-              City
-            </Sort>
-            <Sort sortKey="states" onSort={handleSort}>
-              State
-            </Sort>
-            <Sort sortKey="zipCode" onSort={handleSort}>
-              Zip Code
-            </Sort>
+            {sortDatas.map((sortData, index) => (
+              <Sort key={index} sortKey={sortData.sortKey} onSort={handleSort}>
+                {sortData.content}
+              </Sort>
+            ))}
           </tr>
         </thead>
         {renderTbody(datas)}
@@ -137,7 +108,11 @@ export function Table({ datas }) {
           Showing {datas ? datas.length : 0} to {numEntries} of{' '}
           {datas ? datas.length : 0} entries
         </p>
-        {datas ? <Buttons disabled={true} /> : <Buttons disabled={false} />}
+        {datas.length > numEntries ? (
+          <Buttons disabled={true} />
+        ) : (
+          <Buttons disabled={false} />
+        )}
       </div>
     </>
   );
@@ -158,5 +133,6 @@ export function Table({ datas }) {
                   <td>{filteredEmployees.states}</td>
                   <td>{filteredEmployees.zipCode}</td>
                 </tr>
+                ))}
             */
 }
