@@ -45,27 +45,49 @@ export function Table({ datas, sortDatas }) {
 
   const renderTbody = (datas) => {
     if (datas) {
-      return (
-        <tbody className={styles.tbodyData}>
-          {sortedData &&
-            sortedData.map((data, index) => {
-              const employee = parseData(data);
-              return (
-                <tr key={index}>
-                  <td>{employee.firstName}</td>
-                  <td>{employee.lastName}</td>
-                  <td>{employee.startDate}</td>
-                  <td>{employee.department}</td>
-                  <td>{employee.dateBirth}</td>
-                  <td>{employee.street}</td>
-                  <td>{employee.city}</td>
-                  <td>{employee.states}</td>
-                  <td>{employee.zipCode}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      );
+      if (filteredData) {
+        return (
+          <tbody className={styles.tbodyData}>
+            {filteredData &&
+              filteredData.map((data, index) => {
+                const employee = parseData(data);
+                return (
+                  <tr key={index}>
+                    <td>{employee.firstName}</td>
+                    <td>{employee.lastName}</td>
+                    <td>{employee.startDate}</td>
+                    <td>{employee.department}</td>
+                    <td>{employee.dateBirth}</td>
+                    <td>{employee.street}</td>
+                    <td>{employee.city}</td>
+                    <td>{employee.states}</td>
+                    <td>{employee.zipCode}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        );
+      } else {
+        return (
+          sortedData &&
+          sortedData.map((data, index) => {
+            const employee = parseData(data);
+            return (
+              <tr key={index}>
+                <td>{employee.firstName}</td>
+                <td>{employee.lastName}</td>
+                <td>{employee.startDate}</td>
+                <td>{employee.department}</td>
+                <td>{employee.dateBirth}</td>
+                <td>{employee.street}</td>
+                <td>{employee.city}</td>
+                <td>{employee.states}</td>
+                <td>{employee.zipCode}</td>
+              </tr>
+            );
+          })
+        );
+      }
     } else {
       return (
         <tbody>
@@ -88,7 +110,6 @@ export function Table({ datas, sortDatas }) {
         />
         <Search datas={datas} onSearch={handleSearch} />
       </div>
-
       <table>
         <thead>
           <tr className={styles.headersName}>
@@ -116,23 +137,4 @@ export function Table({ datas, sortDatas }) {
       </div>
     </>
   );
-}
-{
-  /* 
-              {filteredData.map((item, index) => {
-              const filteredEmployees = JSON.parse(item);
-              return (
-                <tr key={index}>
-                  <td>{filteredEmployees.firstName}</td>
-                  <td>{filteredEmployees.lastName}</td>
-                  <td>{filteredEmployees.startDate}</td>
-                  <td>{filteredEmployees.department}</td>
-                  <td>{filteredEmployees.dateBirth}</td>
-                  <td>{filteredEmployees.street}</td>
-                  <td>{filteredEmployees.city}</td>
-                  <td>{filteredEmployees.states}</td>
-                  <td>{filteredEmployees.zipCode}</td>
-                </tr>
-                ))}
-            */
 }
