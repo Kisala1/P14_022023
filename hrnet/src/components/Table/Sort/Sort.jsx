@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function Sort({ children , sortKey, onSort}) {
+export function Sort({ children, sortKey, onSort }) {
   const [sortDirection, setSortDirection] = useState('none');
 
   const handleClick = () => {

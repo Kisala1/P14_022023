@@ -1,7 +1,7 @@
 import { Sort } from './Sort/Sort';
 import { Show } from './Show/Show';
 import { Search } from './Search/Search';
-import { Buttons } from './Buttons/Buttons';
+import { Pagination } from './Pagination/Pagination';
 import { useState } from 'react';
 import styles from './Table.module.scss';
 
@@ -12,18 +12,26 @@ export function Table({ datas, sortDatas }) {
   const [sortDirection, setSortDirection] = useState('none');
   const [numEntries, setNumEntries] = useState(10);
   const [filteredData, setFilteredData] = useState(datas);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   function handleNumEntriesChange(event) {
     setNumEntries(parseInt(event.target.value));
+    setTotalPages(
+      Math.ceil(filteredData.length / parseInt(event.target.value))
+    );
   }
 
   const handleSearch = (data) => {
     setFilteredData(data);
+    setTotalPages(Math.ceil(data.length / numEntries));
+    setCurrentPage(1);
   };
 
   const handleSort = (key, direction) => {
     setSortKey(key);
     setSortDirection(direction);
+    setCurrentPage(1);
   };
 
   const sortedData =
@@ -37,55 +45,43 @@ export function Table({ datas, sortDatas }) {
         // TODO appliquer le tri par firstname directement sur la page + modifier la condition
         // TODO Faire en sorte que la flèche précédente disparaisse après avoir appuyé sur un autre élément pour trier
         if (employeeA < employeeB) {
-          return sortDirection === 'ascending' ? -1 : 1;
+          return sortDirection === 'descending' ? -1 : 1;
         }
-        return sortDirection === 'descending' ? 1 : -1;
+        return sortDirection === 'ascending' ? 1 : -1;
       })
       .slice(0, numEntries);
+
+  const filterDataByPage = (data) => {
+    const startIndex = (currentPage - 1) * numEntries;
+    const endIndex = startIndex + numEntries;
+    return data.slice(startIndex, endIndex);
+  };
+  const filteredDataByPage = filteredData
+    ? filterDataByPage(filteredData)
+    : filteredData && filterDataByPage(sortedData);
 
   const renderTbody = (datas) => {
     if (datas) {
       if (filteredData) {
         return (
           <tbody className={styles.tbodyData}>
-            {filteredData &&
-              filteredData.map((data, index) => {
-                const employee = parseData(data);
-                return (
-                  <tr key={index}>
-                    <td>{employee.firstName}</td>
-                    <td>{employee.lastName}</td>
-                    <td>{employee.startDate}</td>
-                    <td>{employee.department}</td>
-                    <td>{employee.dateBirth}</td>
-                    <td>{employee.street}</td>
-                    <td>{employee.city}</td>
-                    <td>{employee.states}</td>
-                    <td>{employee.zipCode}</td>
-                  </tr>
-                );
-              })}
+            {filteredDataByPage.map((data, index) => {
+              const employee = parseData(data);
+              return (
+                <tr key={index}>
+                  <td>{employee.firstName}</td>
+                  <td>{employee.lastName}</td>
+                  <td>{employee.startDate}</td>
+                  <td>{employee.department}</td>
+                  <td>{employee.dateBirth}</td>
+                  <td>{employee.street}</td>
+                  <td>{employee.city}</td>
+                  <td>{employee.states}</td>
+                  <td>{employee.zipCode}</td>
+                </tr>
+              );
+            })}
           </tbody>
-        );
-      } else {
-        return (
-          sortedData &&
-          sortedData.map((data, index) => {
-            const employee = parseData(data);
-            return (
-              <tr key={index}>
-                <td>{employee.firstName}</td>
-                <td>{employee.lastName}</td>
-                <td>{employee.startDate}</td>
-                <td>{employee.department}</td>
-                <td>{employee.dateBirth}</td>
-                <td>{employee.street}</td>
-                <td>{employee.city}</td>
-                <td>{employee.states}</td>
-                <td>{employee.zipCode}</td>
-              </tr>
-            );
-          })
         );
       }
     } else {
@@ -129,11 +125,11 @@ export function Table({ datas, sortDatas }) {
           Showing {datas ? datas.length : 0} to {numEntries} of{' '}
           {datas ? datas.length : 0} entries
         </p>
-        {datas.length > numEntries ? (
-          <Buttons disabled={true} />
-        ) : (
-          <Buttons disabled={false} />
-        )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </>
   );
