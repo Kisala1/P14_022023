@@ -74,7 +74,7 @@ export function Table({ datas, sortDatas }) {
               .map((data, index) => {
                 const employee = parseData(data);
                 return (
-                  <tr key={index}>
+                  <tr key={index} className={styles.rowData}>
                     <td>{employee.firstName}</td>
                     <td>{employee.lastName}</td>
                     <td>{employee.startDate}</td>
