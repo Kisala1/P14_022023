@@ -6,6 +6,7 @@ import styles from './style/Employees-list.module.scss';
 export function EmployeesList() {
   const employeesData = localStorage.getItem('employees');
   const employeeData = JSON.parse(employeesData);
+
   const sortDatas = [
     {
       sortKey: 'firstName',

@@ -16,5 +16,5 @@ const localStorageSlice = createSlice({
   },
 });
 
-export const { createLocalStorage } = localStorageSlice.actions;
+export const { createLocalStorage, employeesDatas } = localStorageSlice.actions;
 export default localStorageSlice.reducer;
