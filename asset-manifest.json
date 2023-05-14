@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/siteHrnet/static/css/main.b856f69a.css",
+    "main.js": "/siteHrnet/static/js/main.e2d66146.js",
+    "static/js/787.a603b31f.chunk.js": "/siteHrnet/static/js/787.a603b31f.chunk.js",
+    "static/media/logo.jpg": "/siteHrnet/static/media/logo.550a61bba16a38a1d91d.jpg",
+    "index.html": "/siteHrnet/index.html",
+    "main.b856f69a.css.map": "/siteHrnet/static/css/main.b856f69a.css.map",
+    "main.e2d66146.js.map": "/siteHrnet/static/js/main.e2d66146.js.map",
+    "787.a603b31f.chunk.js.map": "/siteHrnet/static/js/787.a603b31f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b856f69a.css",
+    "static/js/main.e2d66146.js"
+  ]
+}
