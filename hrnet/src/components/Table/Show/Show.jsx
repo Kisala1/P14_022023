@@ -1,18 +1,22 @@
 import styles from './Show.module.scss';
-import { useState } from 'react';
-export function Show() {
-  const [numEntries, setNumEntries] = useState(10);
-  function handleNumEntriesChange(event) {
-    setNumEntries(parseInt(event.target.value));
-  }
+
+export function Show({numEntries, setNumEntries,handleNumEntriesChange}) {
+  const optionValues = ['10', '25', '50', '100'];
+
+
   return (
-    <div className={styles.container}>
+    <div className={styles.dropDownValueEntries}>
       <label htmlFor="num-entries">Show</label>
-      <select id="num-entries" value={numEntries} onChange={handleNumEntriesChange}>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
+      <select
+        id="num-entries"
+        value={numEntries}
+        onChange={handleNumEntriesChange}
+      >
+        {optionValues.map((value, index) => (
+          <option key={index} value={value}>
+            {value}
+          </option>
+        ))}
       </select>
       <p>entries</p>
     </div>

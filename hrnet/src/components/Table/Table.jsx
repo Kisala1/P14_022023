@@ -1,191 +1,156 @@
 import { Sort } from './Sort/Sort';
 import { Show } from './Show/Show';
 import { Search } from './Search/Search';
-import { Buttons } from './Buttons/Buttons';
-import { useState } from 'react';
+import { Pagination } from './Pagination/Pagination';
+import { useEffect, useState } from 'react';
 import styles from './Table.module.scss';
 
-export function Table({ datas }) {
+const parseData = (data) => JSON.parse(data);
+
+export function Table({ datas, sortDatas }) {
   const [sortKey, setSortKey] = useState(null);
   const [sortDirection, setSortDirection] = useState('none');
   const [numEntries, setNumEntries] = useState(10);
-  function handleNumEntriesChange(event) {
-    setNumEntries(parseInt(event.target.value));
-  }
+  const [filteredData, setFilteredData] = useState(datas);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const handleSort = (key, direction) => {
-    setSortKey(key);
-    setSortDirection(direction);
+  useEffect(() => {
+    handleNumEntriesChange({ target: { value: numEntries } });
+  });
+
+  // Fonction de gestionnaire d'événements pour le changement du nombre d'entrées à afficher par page
+  const handleNumEntriesChange = (event) => {
+    // Mettre à jour le nombre d'entrées par page
+    setNumEntries(parseInt(event.target.value));
+    // Mettre à jour le nombre total de pages en fonction
+    // du nombre d'entrées par page et du nombre de données filtrées
+    setTotalPages(
+      Math.ceil(filteredData.length / parseInt(event.target.value))
+    );
   };
 
-  const sortedData =
-    datas &&
-    datas.slice().sort((a, b) => {
-      const employeeA = JSON.parse(a)[sortKey];
-      const employeeB = JSON.parse(b)[sortKey];
-
-      if (employeeA < employeeB) {
-        return sortDirection === 'ascending' ? -1 : 1;
-      }
-      if (employeeA > employeeB) {
-        return sortDirection === 'ascending' ? 1 : -1;
-      }
-      return 0;
-    });
-
-  const [filteredData, setFilteredData] = useState(datas);
-
+  // Fonction de gestionnaire d'événements pour la recherche de données
   const handleSearch = (data) => {
+    // Mettre à jour les données filtrées
     setFilteredData(data);
+    // Mettre à jour le nombre total de pages en fonction
+    // du nombre d'entrées par page et du nombre de données filtrées
+    setTotalPages(Math.ceil(data.length / numEntries));
+    // Revenir à la première page
+    setCurrentPage(1);
+  };
+
+  // Fonction de gestionnaire d'événements pour le tri des données
+  const handleSort = (key, direction) => {
+    // Mettre à jour la clé de tri sélectionnée
+    setSortKey(key);
+    // Mettre à jour la direction de tri sélectionnée
+    setSortDirection(direction);
+    // Revenir à la première page
+    setCurrentPage(1);
+  };
+
+  // Filtre datas en fonction de la page actuelle et du nombre d'entrées par page
+  const filterDataByPage = (data) => {
+    const startIndex = (currentPage - 1) * numEntries;
+    const endIndex = startIndex + numEntries;
+    return data.slice(startIndex, endIndex);
+  };
+
+  // Données filtrées en fonction de la page courante
+  const filteredDataByPage = filteredData
+    ? // filteredDataByPage contiendra uniquement les données filtrées de la page actuelle
+      filterDataByPage(filteredData)
+    : // contiendra les données triées de la page actuelle (sans filtre appliqué) si filterData n'existe pas
+      filteredData && filterDataByPage();
+
+  const renderTbody = (datas) => {
+    if (datas) {
+      if (filteredData) {
+        return (
+          <tbody className={styles.tbodyData}>
+            {filteredDataByPage
+              .map((data, index) => {
+                const employee = parseData(data);
+                return (
+                  <tr key={index} className={styles.rowData}>
+                    <td>{employee.firstName}</td>
+                    <td>{employee.lastName}</td>
+                    <td>{employee.startDate}</td>
+                    <td>{employee.department}</td>
+                    <td>{employee.dateBirth}</td>
+                    <td>{employee.street}</td>
+                    <td>{employee.city}</td>
+                    <td>{employee.states}</td>
+                    <td>{employee.zipCode}</td>
+                  </tr>
+                );
+              })
+              .slice()
+              .sort((a, b) => {
+                let employeeA = a[sortKey];
+                let employeeB = b[sortKey];
+
+                // TODO appliquer le tri par firstname directement sur la page + modifier la condition
+                // TODO Faire en sorte que la flèche précédente disparaisse après avoir appuyé sur un autre élément pour trier
+                if (employeeA < employeeB) {
+                  return sortDirection === 'descending' ? -1 : 1;
+                }
+                return sortDirection === 'ascending' ? 1 : -1;
+              })
+              .slice(0, numEntries)}
+          </tbody>
+        );
+      }
+    } else {
+      return (
+        <tbody>
+          <tr>
+            <td colSpan={9} className={styles.tdNoData}>
+              No data available in table
+            </td>
+          </tr>
+        </tbody>
+      );
+    }
   };
 
   return (
     <>
       <div className={styles.containerSearch}>
-        {/* <Show /> */}
-        <div className={styles.dropDownValueEntries}>
-          <label htmlFor="num-entries">Show</label>
-          <select
-            id="num-entries"
-            value={numEntries}
-            onChange={handleNumEntriesChange}
-          >
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-          <p>entries</p>
-        </div>
+        <Show
+          numEntries={numEntries}
+          setNumEntries={setNumEntries}
+          handleNumEntriesChange={handleNumEntriesChange}
+        />
         <Search datas={datas} onSearch={handleSearch} />
       </div>
-      {datas ? (
-        <>
-          <table>
-            <thead>
-              <tr className={styles.headersName}>
-                <Sort sortKey="firstName" onSort={handleSort}>
-                  First Name
-                </Sort>
-                <Sort sortKey="lastName" onSort={handleSort}>
-                  Last Name
-                </Sort>
-                <Sort sortKey="startDate" onSort={handleSort}>
-                  Start Date
-                </Sort>
-                <Sort sortKey="department" onSort={handleSort}>
-                  Department
-                </Sort>
-                <Sort sortKey="dateBirth" onSort={handleSort}>
-                  Date of Birth
-                </Sort>
-                <Sort sortKey="street" onSort={handleSort}>
-                  Street
-                </Sort>
-                <Sort sortKey="city" onSort={handleSort}>
-                  City
-                </Sort>
-                <Sort sortKey="states" onSort={handleSort}>
-                  State
-                </Sort>
-                <Sort sortKey="zipCode" onSort={handleSort}>
-                  Zip Code
-                </Sort>
-              </tr>
-            </thead>
-
-            <tbody className={styles.tbodyData}>
-              {sortedData &&
-                sortedData.map((data, index) => {
-                  const employee = JSON.parse(data);
-                  return (
-                    <tr key={index}>
-                      <td>{employee.firstName}</td>
-                      <td>{employee.lastName}</td>
-                      <td>{employee.startDate}</td>
-                      <td>{employee.department}</td>
-                      <td>{employee.dateBirth}</td>
-                      <td>{employee.street}</td>
-                      <td>{employee.city}</td>
-                      <td>{employee.states}</td>
-                      <td>{employee.zipCode}</td>
-                    </tr>
-                  );
-                })}
-              {/* {filteredData.map((item, index) => {
-              const filteredEmployees = JSON.parse(item);
-              return (
-                <tr key={index}>
-                  <td>{filteredEmployees.firstName}</td>
-                  <td>{filteredEmployees.lastName}</td>
-                  <td>{filteredEmployees.startDate}</td>
-                  <td>{filteredEmployees.department}</td>
-                  <td>{filteredEmployees.dateBirth}</td>
-                  <td>{filteredEmployees.street}</td>
-                  <td>{filteredEmployees.city}</td>
-                  <td>{filteredEmployees.states}</td>
-                  <td>{filteredEmployees.zipCode}</td>
-                </tr>
-              );
-            })} */}
-            </tbody>
-          </table>
-          <div className={styles.containerShowingBtn}>
-            <p className={styles.numberEntries}>
-              Showing 1 to {numEntries} of{' '}
-              {datas.length} (total entries) entries
-            </p>
-            <Buttons disabled={true} />
-          </div>
-        </>
-      ) : (
-        <>
-          <table>
-            <thead>
-              <tr className={styles.headersName}>
-                <Sort sortKey="firstName" onSort={handleSort}>
-                  First Name
-                </Sort>
-                <Sort sortKey="lastName" onSort={handleSort}>
-                  Last Name
-                </Sort>
-                <Sort sortKey="startDate" onSort={handleSort}>
-                  Start Date
-                </Sort>
-                <Sort sortKey="department" onSort={handleSort}>
-                  Department
-                </Sort>
-                <Sort sortKey="dateBirth" onSort={handleSort}>
-                  Date of Birth
-                </Sort>
-                <Sort sortKey="street" onSort={handleSort}>
-                  Street
-                </Sort>
-                <Sort sortKey="city" onSort={handleSort}>
-                  City
-                </Sort>
-                <Sort sortKey="states" onSort={handleSort}>
-                  State
-                </Sort>
-                <Sort sortKey="zipCode" onSort={handleSort}>
-                  Zip Code
-                </Sort>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colSpan={9} className={styles.tdNoData}>
-                  No data available in table
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className={styles.containerShowingBtn}>
-            <p className={styles.numberEntries}>Showing 0 to {numEntries} of 0 entries</p>
-            <Buttons disabled={false} />
-          </div>
-        </>
-      )}
+      <table>
+        <thead>
+          <tr className={styles.headersName}>
+            {sortDatas.map((sortData, index) => (
+              <Sort key={index} sortKey={sortData.sortKey} onSort={handleSort}>
+                {sortData.content}
+              </Sort>
+            ))}
+          </tr>
+        </thead>
+        {renderTbody(datas)}
+      </table>
+      <div className={styles.containerShowingBtn}>
+        <p className={styles.numberEntries}>
+          {/* TODO Showing {datas ? datas.length : 0} => datas.length incorrect doit afficher le chiffre de la 1ere entries  
+          ex : Showing 1 to 10 of 16 (page 1) ; Showing 11 to 10 of 16 (page 2) */}
+          Showing {datas ? datas.length : 0} to {numEntries} of{' '}
+          {datas ? datas.length : 0} entries
+        </p>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      </div>
     </>
   );
 }
