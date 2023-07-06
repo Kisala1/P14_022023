@@ -2,23 +2,24 @@ import styles from './Pagination.module.scss';
 
 export function Pagination({ currentPage, totalPages, onPageChange }) {
   const getPageNumbers = () => {
-    // Définir la marge de pages à afficher de chaque côté de la page courante
+    // Define the page margin to be displayed on each side of the current page
     const delta = 2;
-    // Calculer les bornes gauche et droite de la marge
+    // Calculate left and right margin limits
     const left = currentPage - delta;
     const right = currentPage + delta + 1;
     let range = [];
     let rangeWithDots = [];
     const l = [];
 
-    // Boucler sur toutes les pages et ajouter celles qui doivent être affichées à la liste "range"
+    // Loop over all pages and add those to be displayed to the "range" list
     for (let i = 1; i <= totalPages; i++) {
       if (i === 1 || i === totalPages || (i >= left && i < right)) {
         range.push(i);
       }
     }
     
-    // Boucler sur les pages de la liste "range" et ajouter des points de suspension entre les pages distantes de plus d'une unité
+    // Loop over pages in the "range" list and add suspension points 
+    // between pages more than one unit apart.
     for (let i of range) {
       if (l.length && i - l[l.length - 1] !== 1) {
         rangeWithDots.push('...');

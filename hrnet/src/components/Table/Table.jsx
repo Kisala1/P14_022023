@@ -1,6 +1,7 @@
 import { Sort } from './Sort/Sort';
 import { Show } from './Show/Show';
 import { Search } from './Search/Search';
+import { Showing } from './Showing/Showing';
 import { Pagination } from './Pagination/Pagination';
 import { useEffect, useState } from 'react';
 import styles from './Table.module.scss';
@@ -19,50 +20,51 @@ export function Table({ datas, sortDatas }) {
     handleNumEntriesChange({ target: { value: numEntries } });
   });
 
-  // Fonction de gestionnaire d'événements pour le changement du nombre d'entrées à afficher par page
+  // Event handler function for changing the number of entries to be displayed per page
   const handleNumEntriesChange = (event) => {
-    // Mettre à jour le nombre d'entrées par page
+    // Update number of entries per page
     setNumEntries(parseInt(event.target.value));
-    // Mettre à jour le nombre total de pages en fonction
-    // du nombre d'entrées par page et du nombre de données filtrées
+    // Update total number of pages based on the number
+    // of entries per page and the number of filtered data
     setTotalPages(
       Math.ceil(filteredData.length / parseInt(event.target.value))
     );
   };
 
-  // Fonction de gestionnaire d'événements pour la recherche de données
+  // Event handler function for data retrieval
   const handleSearch = (data) => {
-    // Mettre à jour les données filtrées
+    // Update filtered data
     setFilteredData(data);
-    // Mettre à jour le nombre total de pages en fonction
-    // du nombre d'entrées par page et du nombre de données filtrées
+    // Update total number of pages based on the number
+    // of entries per page and the number of filtered data
     setTotalPages(Math.ceil(data.length / numEntries));
-    // Revenir à la première page
+    // Back to first page
     setCurrentPage(1);
   };
 
-  // Fonction de gestionnaire d'événements pour le tri des données
+  // Event handler function for data sorting
   const handleSort = (key, direction) => {
     // Mettre à jour la clé de tri sélectionnée
     setSortKey(key);
-    // Mettre à jour la direction de tri sélectionnée
+    // Update the selected sort key
     setSortDirection(direction);
-    // Revenir à la première page
+    // Back to first page
     setCurrentPage(1);
   };
 
-  // Filtre datas en fonction de la page actuelle et du nombre d'entrées par page
+  // Data filter based on current page and number of entries per page
   const filterDataByPage = (data) => {
     const startIndex = (currentPage - 1) * numEntries;
     const endIndex = startIndex + numEntries;
     return data.slice(startIndex, endIndex);
   };
 
-  // Données filtrées en fonction de la page courante
+  // Data filtered by current page
   const filteredDataByPage = filteredData
-    ? // filteredDataByPage contiendra uniquement les données filtrées de la page actuelle
+    ? // filteredDataByPage will contain only filtered data from the current page
       filterDataByPage(filteredData)
-    : // contiendra les données triées de la page actuelle (sans filtre appliqué) si filterData n'existe pas
+    : // will contain the sorted data of the current page
+      // (without filter applied) if filterData does not exist
       filteredData && filterDataByPage();
 
   const renderTbody = (datas) => {
@@ -91,9 +93,6 @@ export function Table({ datas, sortDatas }) {
               .sort((a, b) => {
                 let employeeA = a[sortKey];
                 let employeeB = b[sortKey];
-
-                // TODO appliquer le tri par firstname directement sur la page + modifier la condition
-                // TODO Faire en sorte que la flèche précédente disparaisse après avoir appuyé sur un autre élément pour trier
                 if (employeeA < employeeB) {
                   return sortDirection === 'descending' ? -1 : 1;
                 }
@@ -121,7 +120,6 @@ export function Table({ datas, sortDatas }) {
       <div className={styles.containerSearch}>
         <Show
           numEntries={numEntries}
-          setNumEntries={setNumEntries}
           handleNumEntriesChange={handleNumEntriesChange}
         />
         <Search datas={datas} onSearch={handleSearch} />
@@ -145,12 +143,12 @@ export function Table({ datas, sortDatas }) {
         </table>
       </div>
       <div className={styles.containerShowingBtn}>
-        <p className={styles.numberEntries}>
-          {/* TODO Showing {datas ? datas.length : 0} => datas.length incorrect doit afficher le chiffre de la 1ere entries  
-          ex : Showing 1 to 10 of 16 (page 1) ; Showing 11 to 10 of 16 (page 2) */}
-          Showing {datas ? datas.length : 0} to {numEntries} of{' '}
-          {datas ? datas.length : 0} entries
-        </p>
+        <Showing
+          datas={datas}
+          filteredDataByPage={filteredDataByPage}
+          currentPage={currentPage}
+          numEntries={numEntries}
+        />
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}

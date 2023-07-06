@@ -1,8 +1,7 @@
 import styles from './Show.module.scss';
 
-export function Show({numEntries, setNumEntries,handleNumEntriesChange}) {
+export function Show({ numEntries, handleNumEntriesChange }) {
   const optionValues = ['10', '25', '50', '100'];
-
 
   return (
     <div className={styles.dropDownValueEntries}>

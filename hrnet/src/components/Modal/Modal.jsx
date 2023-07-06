@@ -7,12 +7,14 @@ import { useState } from 'react';
 export function Modal({ closeModal }) {
   const [showModal, setShowModal] = useState(true);
 
+  // to close the modal by clicking outside and on the cross
   const handleClickOutside = (e) => {
     if (e.target === e.currentTarget) {
       setShowModal(false);
       closeModal();
     }
   };
+
   return (
     <>
       {showModal && (

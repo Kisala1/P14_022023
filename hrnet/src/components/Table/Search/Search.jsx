@@ -3,6 +3,7 @@ import styles from './Search.module.scss';
 
 export function Search({ datas, onSearch }) {
   const [searchInput, setSearchInput] = useState('');
+  
   const handleChange = (e) => {
     e.preventDefault();
     setSearchInput(e.target.value);
