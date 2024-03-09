@@ -1,160 +1,77 @@
-import { Sort } from './Sort/Sort';
-import { Show } from './Show/Show';
-import { Search } from './Search/Search';
-import { Showing } from './Showing/Showing';
-import { Pagination } from './Pagination/Pagination';
-import { useEffect, useState } from 'react';
-import styles from './Table.module.scss';
+import { useMemo } from 'react';
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from 'material-react-table';
 
-const parseData = (data) => JSON.parse(data);
+const Example = ({ datas }) => {
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        size: 130,
+      },
+      {
+        accessorKey: 'lastName',
+        header: 'Last Name',
+        size: 130,
+      },
+      {
+        accessorKey: 'startDate',
+        header: 'Start Date',
+        size: 150,
+      },
+      {
+        accessorKey: 'department',
+        header: 'Department',
+        size: 150,
+      },
+      {
+        accessorKey: 'dateBirth',
+        header: 'Date of Birth',
+        size: 150,
+      },
+      {
+        accessorKey: 'street',
+        header: 'Street',
+        size: 200,
+      },
+      {
+        accessorKey: 'city',
+        header: 'City',
+        size: 150,
+      },
+      {
+        accessorKey: 'state',
+        header: 'State',
+        size: 150,
+      },
+      {
+        accessorKey: 'zipCode',
+        header: 'Zip Code',
+        size: 100,
+      },
+    ],
+    []
+  );
 
-export function Table({ datas, sortDatas }) {
-  const [sortKey, setSortKey] = useState(null);
-  const [sortDirection, setSortDirection] = useState('none');
-  const [numEntries, setNumEntries] = useState(10);
-  const [filteredData, setFilteredData] = useState(datas);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  useEffect(() => {
-    handleNumEntriesChange({ target: { value: numEntries } });
+  const table = useMaterialReactTable({
+    columns,
+    data: datas.length ? datas : [],
+    muiTableBodyProps: {
+      sx: {
+        '& tr:nth-of-type(odd) > td': {
+          backgroundColor: 'rgba(110, 133, 17, 0.3)',
+        },
+      },
+    },
+    mrtTheme: {
+      baseBackgroundColor: 'rgba(147, 173, 24, 0.1)',
+    },
   });
 
-  // Event handler function for changing the number of entries to be displayed per page
-  const handleNumEntriesChange = (event) => {
-    // Update number of entries per page
-    setNumEntries(parseInt(event.target.value));
-    // Update total number of pages based on the number
-    // of entries per page and the number of filtered data
-    setTotalPages(
-      Math.ceil(filteredData.length / parseInt(event.target.value))
-    );
-  };
+  return <MaterialReactTable table={table} />;
+};
 
-  // Event handler function for data retrieval
-  const handleSearch = (data) => {
-    // Update filtered data
-    setFilteredData(data);
-    // Update total number of pages based on the number
-    // of entries per page and the number of filtered data
-    setTotalPages(Math.ceil(data.length / numEntries));
-    // Back to first page
-    setCurrentPage(1);
-  };
-
-  // Event handler function for data sorting
-  const handleSort = (key, direction) => {
-    // Mettre à jour la clé de tri sélectionnée
-    setSortKey(key);
-    // Update the selected sort key
-    setSortDirection(direction);
-    // Back to first page
-    setCurrentPage(1);
-  };
-
-  // Data filter based on current page and number of entries per page
-  const filterDataByPage = (data) => {
-    const startIndex = (currentPage - 1) * numEntries;
-    const endIndex = startIndex + numEntries;
-    return data.slice(startIndex, endIndex);
-  };
-
-  // Data filtered by current page
-  const filteredDataByPage = filteredData
-    ? // filteredDataByPage will contain only filtered data from the current page
-      filterDataByPage(filteredData)
-    : // will contain the sorted data of the current page
-      // (without filter applied) if filterData does not exist
-      filteredData && filterDataByPage();
-
-  const renderTbody = (datas) => {
-    if (datas) {
-      if (filteredData) {
-        return (
-          <tbody className={styles.tbodyData}>
-            {filteredDataByPage
-              .map((data, index) => {
-                const employee = parseData(data);
-                return (
-                  <tr key={index} className={styles.rowData}>
-                    <td>{employee.firstName}</td>
-                    <td>{employee.lastName}</td>
-                    <td>{employee.startDate}</td>
-                    <td>{employee.department}</td>
-                    <td>{employee.dateBirth}</td>
-                    <td>{employee.street}</td>
-                    <td>{employee.city}</td>
-                    <td>{employee.states}</td>
-                    <td>{employee.zipCode}</td>
-                  </tr>
-                );
-              })
-              .slice()
-              .sort((a, b) => {
-                let employeeA = a[sortKey];
-                let employeeB = b[sortKey];
-                if (employeeA < employeeB) {
-                  return sortDirection === 'descending' ? -1 : 1;
-                }
-                return sortDirection === 'ascending' ? 1 : -1;
-              })
-              .slice(0, numEntries)}
-          </tbody>
-        );
-      }
-    } else {
-      return (
-        <tbody>
-          <tr>
-            <td colSpan={9} className={styles.tdNoData}>
-              No data available in table
-            </td>
-          </tr>
-        </tbody>
-      );
-    }
-  };
-
-  return (
-    <>
-      <div className={styles.containerSearch}>
-        <Show
-          numEntries={numEntries}
-          handleNumEntriesChange={handleNumEntriesChange}
-        />
-        <Search datas={datas} onSearch={handleSearch} />
-      </div>
-      <div className={styles.containerTable}>
-        <table>
-          <thead>
-            <tr className={styles.headersName}>
-              {sortDatas.map((sortData, index) => (
-                <Sort
-                  key={index}
-                  sortKey={sortData.sortKey}
-                  onSort={handleSort}
-                >
-                  {sortData.content}
-                </Sort>
-              ))}
-            </tr>
-          </thead>
-          {renderTbody(datas)}
-        </table>
-      </div>
-      <div className={styles.containerShowingBtn}>
-        <Showing
-          datas={datas}
-          filteredDataByPage={filteredDataByPage}
-          currentPage={currentPage}
-          numEntries={numEntries}
-        />
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      </div>
-    </>
-  );
-}
+export default Example;
