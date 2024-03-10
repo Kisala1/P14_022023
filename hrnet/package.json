@@ -1,8 +1,7 @@
 {
-  "homepage": "https://kisala1.github.io/P14_022023/",
-  "name": "hrnet",
+  "name": "@kisala/hrnet",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
@@ -17,8 +16,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "material-react-table": "^2.12.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
@@ -52,6 +49,11 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "gh-pages": "^5.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.2"
   }
 }
