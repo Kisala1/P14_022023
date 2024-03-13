@@ -10,7 +10,7 @@
 4. Exécutez les commandes suivantes :  
      npm install  
      npm start  
-   ou  
+   ### ou  
    yarn install  
    yarn start    
    
