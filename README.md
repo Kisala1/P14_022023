@@ -9,8 +9,10 @@
 3. Ouvrir votre terminal dans le projet cloné
 4. Exécutez les commandes suivantes :    
      npm install  
-     npm start  
-   #### ou  
+     npm start
+     
+   ou
+     
    yarn install  
    yarn start    
    
