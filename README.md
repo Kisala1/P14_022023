@@ -18,30 +18,30 @@ en écrivant la commande ci-dessous dans votre terminal :
 
 ## Dependencies utilisées : 
 
-@emotion/react: 11.11.4
-@emotion/styled: 11.11.0
-@fortawesome/fontawesome-svg-core: 6.3.0
-@fortawesome/free-solid-svg-icons: 6.3.0
-@fortawesome/react-fontawesome: 0.2.0
-@mui/icons-material: 5.15.12
-@mui/material: 5.15.12
-@mui/x-date-pickers: 6.19.6
-@reduxjs/toolkit: 1.9.3
-@testing-library/jest-dom: 5.16.5
-@testing-library/react: 13.4.0
-@testing-library/user-event: 13.5.0
-material-react-table: 2.12.1
-react-redux: 8.0.5
-react-router-dom: 6.8.1
-react-scripts: 5.0.1
-sass: 1.58.3
-web-vitals: 2.1.4
+@emotion/react: 11.11.4  
+@emotion/styled: 11.11.0  
+@fortawesome/fontawesome-svg-core: 6.3.0  
+@fortawesome/free-solid-svg-icons: 6.3.0  
+@fortawesome/react-fontawesome: 0.2.0  
+@mui/icons-material: 5.15.12  
+@mui/material: 5.15.12  
+@mui/x-date-pickers: 6.19.6  
+@reduxjs/toolkit: 1.9.3  
+@testing-library/jest-dom: 5.16.5  
+@testing-library/react: 13.4.0  
+@testing-library/user-event: 13.5.0  
+material-react-table: 2.12.1  
+react-redux: 8.0.5  
+react-router-dom: 6.8.1  
+react-scripts: 5.0.1  
+sass: 1.58.3  
+web-vitals: 2.1.4  
 
 ## Dev Dependencies utiliées
 
-@types/react
-@types/react-dom
-gh-pages
-react
-react-dom
-typescript
+@types/react  
+@types/react-dom  
+gh-pages  
+react  
+react-dom  
+typescript  
