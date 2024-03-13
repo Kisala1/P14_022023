@@ -10,6 +10,9 @@
 4. Exécutez les commandes suivantes :  
      npm install  
      npm start
+   ou
+   yarn install
+   yarn start  
    
 ### Deuxième façon :
 Si vous avez npm d'installé sur votre système vous pouvez installer directement le package suivant,
@@ -37,7 +40,7 @@ react-scripts: 5.0.1
 sass: 1.58.3  
 web-vitals: 2.1.4  
 
-## Dev Dependencies utiliées
+## Dev Dependencies utilisées
 
 @types/react  
 @types/react-dom  
