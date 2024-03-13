@@ -7,13 +7,13 @@
    git clone https://github.com/Kisala1/P14_022023.git
    
 3. Ouvrir votre terminal dans le projet cloné
-4. Exécutez les commandes suivantes :
-     npm install
+4. Exécutez les commandes suivantes :  
+     npm install  
      npm start
    
 ### Deuxième façon :
 Si vous avez npm d'installé sur votre système vous pouvez installer directement le package suivant,
-en écrivant la commande ci-dessous dans votre terminal :
+en écrivant la commande ci-dessous dans votre terminal :  
   npm i @kisala/hrnet
 
 ## Dependencies utilisées : 
