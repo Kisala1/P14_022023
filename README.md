@@ -7,10 +7,10 @@
    git clone https://github.com/Kisala1/P14_022023.git
    
 3. Ouvrir votre terminal dans le projet cloné
-4. Exécutez les commandes suivantes :  
+4. Exécutez les commandes suivantes :    
      npm install  
      npm start  
-   ### ou  
+   #### ou  
    yarn install  
    yarn start    
    
