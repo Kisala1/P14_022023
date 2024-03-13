@@ -1,4 +1,4 @@
-# jQuery_converti converti en React
+# jQuery converti en React
 
 ## Comment lancer l'application en local ?
 
