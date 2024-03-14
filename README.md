@@ -2,7 +2,6 @@
 
 ## Comment lancer l'application en local ?
 
-### Première façon :
 1. Clonez le repo sur votre ordinateur :
    git clone https://github.com/Kisala1/P14_022023.git
    
@@ -16,10 +15,13 @@
    yarn install  
    yarn start    
    
-### Deuxième façon :
+### Possibilité de télécharger un composant Dorpdown en React
 Si vous avez npm d'installé sur votre système vous pouvez installer directement le package suivant,
 en écrivant la commande ci-dessous dans votre terminal :  
   npm i @kisala/hrnet
+
+Pour plus de détails sur le composant npm : 
+
 
 ## Dependencies utilisées : 
 
