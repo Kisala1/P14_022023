@@ -15,7 +15,7 @@
    yarn install  
    yarn start    
    
-### Possibilité de télécharger un composant Dorpdown en React
+### Possibilité de télécharger un composant Dropdown en React
 Si vous avez npm d'installé sur votre système vous pouvez installer directement le package suivant,
 en écrivant la commande ci-dessous dans votre terminal :  
   npm i @kisala/hrnet
