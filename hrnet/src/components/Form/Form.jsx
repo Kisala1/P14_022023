@@ -2,7 +2,7 @@ import { Input } from '../Inputs/TextInput/Input';
 import { DateInput } from '../Inputs/DateInput/DateInput';
 import { NumberInput } from '../Inputs/NumberInput/NumberInput';
 import { Button } from '../Button/Button';
-import { DropDown } from '../Dropdown/Dropdown';
+import { Dropdown } from '@kisala/hrnet-dropdown';
 import { Modal } from '../Modal/Modal';
 import departments from '../../data/departments.json';
 import states from '../../data/states.json';
@@ -63,7 +63,10 @@ export function Form({ textInputs, dateInputs, adressInputs }) {
       <fieldset className={styles.containerAdressInputs}>
         <legend className={styles.legend}>Adress</legend>
         {adressInputs.map((el, index) => renderInput(el, index, Input))}
-        <DropDown name={'States'} options={states.States} />
+        <Dropdown
+          name={'States'}
+          options={states.States.map((state) => state.name)}
+        />
 
         <div className={styles.blocInput}>
           <label>Zip Code</label>
@@ -75,7 +78,10 @@ export function Form({ textInputs, dateInputs, adressInputs }) {
         </div>
       </fieldset>
       <div className={styles.dropdownDepartments}>
-        <DropDown name={'Department'} options={departments.Departments} />
+        <Dropdown
+          name={'Department'}
+          options={departments.Departments.map((department) => department.name)}
+        />
       </div>
       <Button type="submit" content="Save" />
     </form>
